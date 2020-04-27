@@ -1,0 +1,94 @@
+# Importer le module csv
+import csv
+
+csv_file = open("interventionscitoyendo.csv")
+csv_file.readline()  # Consommer la première ligne du fichier qui est l'entête
+csv_reader = csv.reader(csv_file, delimiter=",")  # Retourne un objet reader qui lit ligne par ligne
+
+dictionnaire_crime_plus_frequent = {}
+dictionnaire_periode_plus_frequente = {}
+dictionnaire_PDQ_plus_frequente = {}
+
+
+def statistique_crime_plus_frequent():  # print le nombre de cas par crime et spécifie le crime avec le plus de cas
+    dictionnaire_crime_plus_frequent = {}
+    for ligne in csv_reader:
+        # if else statement qui permet de totaliser le nombre de cas par crime
+        if ligne[0] in dictionnaire_crime_plus_frequent.keys():
+            dictionnaire_crime_plus_frequent[ligne[0]] += 1
+        else:
+            dictionnaire_crime_plus_frequent[ligne[0]] = 1
+
+    print("\n## STATS #1: LES CRIMES ET LEUR NOMBRE DE CAS ##")
+    for key, value in dictionnaire_crime_plus_frequent.items():  # loop pour printer le nombre de cas par crime
+        print(key, " = ", value)
+
+    crime_plus_frequent = max(dictionnaire_crime_plus_frequent, key=dictionnaire_crime_plus_frequent.get)  #définie le crime avec le plus de cas dans une var
+    nombre_de_cas = dictionnaire_crime_plus_frequent[max(dictionnaire_crime_plus_frequent, key=dictionnaire_crime_plus_frequent.get)] # définie le nombre de cas du plus frequent crime dans une var
+    print('Le crime le plus répétitif de 2015 a aujourdhui est donc: "{}" avec {} cas. \n'.format(crime_plus_frequent, nombre_de_cas))
+
+    csv_file.seek(0) #retourne a la ligne 0 du fichier CSV pour son prochaine utilisation
+    csv_file.readline()  # Consommer la première ligne du fichier qui est l'entête
+
+def getNom_crime_plus_frequent():  #permet d'obtenir le nom du crime le plus frequent
+    for ligne in csv_reader:
+        # if else statement qui permet de totaliser le nombre de cas par crime
+        if ligne[0] in dictionnaire_crime_plus_frequent.keys():
+            dictionnaire_crime_plus_frequent[ligne[0]] += 1
+        else:
+            dictionnaire_crime_plus_frequent[ligne[0]] = 1
+
+    csv_file.seek(0) #retourne a la ligne 0 du fichier CSV pour son prochaine utilisation
+    csv_file.readline()  # Consommer la première ligne du fichier qui est l'entête
+    return max(dictionnaire_crime_plus_frequent, key=dictionnaire_crime_plus_frequent.get)  #retourne le crime le plus frequent a la fonction
+
+
+def statistique_periode_plus_frequente(): #print le période de la journée la plus fréquente pour le crime le plus fréquent
+    crime_plus_frequent = getNom_crime_plus_frequent()
+    for ligne in csv_reader:
+        # if else statement qui permette de totaliser le nombre de cas pour chaque périodes du plus frequent crime
+        if ligne[0] == crime_plus_frequent:
+            if ligne[2] in dictionnaire_periode_plus_frequente.keys():
+                dictionnaire_periode_plus_frequente[ligne[2]] += 1
+            else:
+                dictionnaire_periode_plus_frequente[ligne[2]] = 1
+    print("\n##  STATS #2: LES QUARTS ET LEUR NOMBRE DE CAS (POUR LE CRIME LE PLUS FREQUENT) ##")
+    for key, value in dictionnaire_periode_plus_frequente.items(): # loop pour printer le nombre de cas par periode
+        print(key, " = ", value)
+
+    periode_plus_frequente = max(dictionnaire_periode_plus_frequente, key=dictionnaire_periode_plus_frequente.get)  # définie la periode avec le plus de cas dans une var
+    nombre_de_cas = dictionnaire_periode_plus_frequente[max(dictionnaire_periode_plus_frequente, key=dictionnaire_periode_plus_frequente.get)]  # définie le nombre de cas de la plus frequente periode dans une var
+    print('Le période le plus répétitive de 2015 a aujourdhui pour le crime le plus fréquent est donc le: "{}" avec {} cas.'.format(periode_plus_frequente, nombre_de_cas))
+
+    csv_file.seek(0)  # retourne a la ligne 0 du fichier CSV pour son prochaine utilisation
+    csv_file.readline()  # Consommer la première ligne du fichier qui est l'entête
+
+def statistique_PDQ_plus_frequente(): #print le période de le PDQ le plus fréquente pour le crime le plus fréquent
+    crime_plus_frequent = getNom_crime_plus_frequent()
+    for ligne in csv_reader:
+        # if else statement qui permette de totaliser le nombre de cas pour chaque PDQ du plus frequent crime
+        if ligne[0] == crime_plus_frequent:
+            if ligne[3] in dictionnaire_PDQ_plus_frequente.keys():
+                dictionnaire_PDQ_plus_frequente[ligne[3]] += 1
+            else:
+                dictionnaire_PDQ_plus_frequente[ligne[3]] = 1
+    #liste trop longue donc print pas chaque PDQ, mais possible de le faire en enlevant les "#" plus bas
+    #print("\n##  STATS #3: LES PDQ ET LEUR NOMBRE DE CAS (POUR LE CRIME LE PLUS FREQUENT) ##")
+    #for key, value in dictionnaire_PDQ_plus_frequente.items(): # loop pour printer le nombre de cas par PDQ
+    #    print(key, " = ", value)
+
+    print("\n##  STATS #3: LES PDQ LE PLUS FREQUENT (POUR LE CRIME LE PLUS FREQUENT) ##")
+    pdq_plus_frequent = max(dictionnaire_PDQ_plus_frequente, key=dictionnaire_PDQ_plus_frequente.get)  # définie le PDQ avec le plus de cas dans une var
+    nombre_de_cas = dictionnaire_PDQ_plus_frequente[max(dictionnaire_PDQ_plus_frequente, key=dictionnaire_PDQ_plus_frequente.get)]  # définie le nombre de cas du la plus frequente PDQ dans une var
+    print('Le PDQ le plus repetitif de 2015 a aujourdhui pour le crime le plus fréquent est donc le PDQ #: "{}" avec {} cas.'.format(pdq_plus_frequent, nombre_de_cas))
+
+    csv_file.seek(0)  # retourne a la ligne 0 du fichier CSV pour son prochaine utilisation
+    csv_file.readline()  # Consommer la première ligne du fichier qui est l'entête
+
+######### TEST DES STATS PLUS BAS ############
+
+statistique_crime_plus_frequent()  # appel la fonction qui print le crime le plus frequent
+statistique_periode_plus_frequente() # appel la fonction qui print la periode la plus frequente du crime le plus frequent
+statistique_PDQ_plus_frequente() # appel la fonction qui print le PDQ le plus frequent du crime le plus frequent
+
+
