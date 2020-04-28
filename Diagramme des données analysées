@@ -1,0 +1,46 @@
+import numpy as np 
+import matplotlib.pyplot as plt 
+import csv 
+import matplotlib.pyplot as plt; plt.rcdefaults()
+
+csv_file = open("interventionscitoyendo.csv") 
+csv_file.readline() # Consommer la première ligne du fichier qui est l'entête 
+csv_reader = csv.reader(csv_file, delimiter=",") # Retourne un objet reader qui lit ligne par ligne
+
+dictionnaire_crime_diagramme = {}
+
+def crime_diagramme(): # print le nombre de cas par crime et spécifie le crime avec le plus de cas 
+    dictionnaire_crime_diagramme = {} 
+    
+    for ligne in csv_reader:
+
+    # if else statement qui permet de totaliser le nombre de cas par crime
+        if ligne[0] in dictionnaire_crime_diagramme.keys():
+            dictionnaire_crime_diagramme[ligne[0]] += 1
+        else:
+            dictionnaire_crime_diagramme[ligne[0]] = 1    
+
+    crime1 = dictionnaire_crime_diagramme['Vol de vehicule a moteur']
+    crime2 = dictionnaire_crime_diagramme['Mefait']
+    crime3 = dictionnaire_crime_diagramme['Vols qualifies']
+    crime4 = dictionnaire_crime_diagramme['Vol dans / sur vehicule a moteur']
+    crime5 = dictionnaire_crime_diagramme['Introduction']
+    crime6 = dictionnaire_crime_diagramme['Infractions entrainant la mort']
+    
+
+    objects = (dictionnaire_crime_diagramme.keys())
+    y_pos = np.arange(len(objects))
+    performance = [crime1, crime2, crime3, crime4, crime5, crime6]
+
+    plt.barh(y_pos, performance, align='center', alpha=0.5)
+    plt.yticks(y_pos, objects)
+    plt.xlabel('Frequence')
+    plt.title('Frequence des crimes depuis 2015')
+
+    plt.show()
+
+
+    csv_file.seek(0) #retourne a la ligne 0 du fichier CSV pour son prochaine utilisation
+    csv_file.readline()  # Consommer la première ligne du fichier qui est l'entête
+    
+crime_diagramme()
