@@ -34,7 +34,7 @@ def statistique_crime_plus_frequent():  # print le nombre de cas par crime et sp
         else:
             dictionnaire_crime_plus_frequent[ligne[0]] = 1
 
-    print("\n## STATS #1: LES CRIMES ET LEUR NOMBRE DE CAS ##")
+    print("\n## STATS #2: LES CRIMES ET LEUR NOMBRE DE CAS ##")
     for key, value in dictionnaire_crime_plus_frequent.items():  # loop pour printer le nombre de cas par crime
         print(key, " = ", value)
 
@@ -67,7 +67,7 @@ def statistique_periode_plus_frequente(): #print le période de la journée la p
                 dictionnaire_periode_plus_frequente[ligne[2]] += 1
             else:
                 dictionnaire_periode_plus_frequente[ligne[2]] = 1
-    print("\n##  STATS #2: LES QUARTS ET LEUR NOMBRE DE CAS (POUR LE CRIME LE PLUS FREQUENT) ##")
+    print("\n##  STATS #3: LES QUARTS ET LEUR NOMBRE DE CAS (POUR LE CRIME LE PLUS FREQUENT) ##")
     for key, value in dictionnaire_periode_plus_frequente.items(): # loop pour printer le nombre de cas par periode
         print(key, " = ", value)
 
@@ -88,7 +88,7 @@ def statistique_PDQ_plus_frequente(): #print le période de le PDQ le plus fréq
             else:
                 dictionnaire_PDQ_plus_frequente[ligne[3]] = 1
     #liste trop longue donc print pas chaque PDQ, mais possible de le faire en enlevant les "#" plus bas
-    #print("\n##  STATS #3: LES PDQ ET LEUR NOMBRE DE CAS (POUR LE CRIME LE PLUS FREQUENT) ##")
+    #print("\n##  STATS #4: LES PDQ ET LEUR NOMBRE DE CAS (POUR LE CRIME LE PLUS FREQUENT) ##")
     #for key, value in dictionnaire_PDQ_plus_frequente.items(): # loop pour printer le nombre de cas par PDQ
     #    print(key, " = ", value)
 
