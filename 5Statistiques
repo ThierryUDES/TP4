@@ -7,7 +7,7 @@ csv_reader = csv.reader(csv_file, delimiter=",")  # Retourne un objet reader qui
 
 
 def crime_nombre_de_cas():
-    dict={}
+    dict={} #creation de dictionnaire
     for ligne in csv_reader:
         if ligne[2] in dict.keys():
             dict[ligne[2]] += 1
@@ -109,11 +109,11 @@ def nom_adresse_pdq(numero_pdq):
     print(("\n##  STATS #5: LE NOM ET ADRESSE DU PDQ) ##"))
     print('le nom et adresse de ce PDQ  sont: "{}".'.format(dict[str(numero_pdq)]))
 
-######### TEST DES STATS PLUS BAS ############
-
 crime_nombre_de_cas()
 statistique_crime_plus_frequent()  # appel la fonction qui print le crime le plus frequent
 statistique_periode_plus_frequente() # appel la fonction qui print la periode la plus frequente du crime le plus frequent
 statistique_PDQ_plus_frequente() # appel la fonction qui print le PDQ le plus frequent du crime le plus frequent
 nom_adresse_pdq(20)
+
+
 
