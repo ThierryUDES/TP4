@@ -5,9 +5,24 @@ csv_file = open("interventionscitoyendo.csv")
 csv_file.readline()  # Consommer la première ligne du fichier qui est l'entête
 csv_reader = csv.reader(csv_file, delimiter=",")  # Retourne un objet reader qui lit ligne par ligne
 
+
+def crime_nombre_de_cas():
+    dict={}
+    for ligne in csv_reader:
+        if ligne[2] in dict.keys():
+            dict[ligne[2]] += 1
+        else:
+            dict[ligne[2]] = 1
+    print("\n## STATS #1: LE QUART DE LA JOURNEE AYANT LE PLUS DE CRIMES ##")
+    print(dict)
+    csv_file.seek(0) #retourne a la ligne 0 du fichier CSV pour son prochaine utilisation
+    csv_file.readline()  # Consommer la première ligne du fichier qui est l'entête
+
+
 dictionnaire_crime_plus_frequent = {}
 dictionnaire_periode_plus_frequente = {}
 dictionnaire_PDQ_plus_frequente = {}
+
 
 
 def statistique_crime_plus_frequent():  # print le nombre de cas par crime et spécifie le crime avec le plus de cas
@@ -85,10 +100,20 @@ def statistique_PDQ_plus_frequente(): #print le période de le PDQ le plus fréq
     csv_file.seek(0)  # retourne a la ligne 0 du fichier CSV pour son prochaine utilisation
     csv_file.readline()  # Consommer la première ligne du fichier qui est l'entête
 
+
+def nom_adresse_pdq(numero_pdq):
+    csv_file = open("liste_pdq_ville.csv")
+    csv_file.readline()  # Consommer la première ligne du fichier qui est l'entête
+    csv_reader = csv.reader(csv_file, delimiter=";")  # Retourne un objet reader qui lit ligne par ligne
+    dict = {row[0]: (row[1], row[2]) for row in csv_reader}
+    print(("\n##  STATS #5: LE NOM ET ADRESSE DU PDQ) ##"))
+    print('le nom et adresse de ce PDQ  sont: "{}".'.format(dict[str(numero_pdq)]))
+
 ######### TEST DES STATS PLUS BAS ############
 
+crime_nombre_de_cas()
 statistique_crime_plus_frequent()  # appel la fonction qui print le crime le plus frequent
 statistique_periode_plus_frequente() # appel la fonction qui print la periode la plus frequente du crime le plus frequent
 statistique_PDQ_plus_frequente() # appel la fonction qui print le PDQ le plus frequent du crime le plus frequent
-
+nom_adresse_pdq(20)
 
