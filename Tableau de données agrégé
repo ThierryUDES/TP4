@@ -1,0 +1,7 @@
+import pandas
+df = pandas.read_csv("interventionscitoyendo.csv", delimiter=",")
+
+df['DATE'] = pd.to_datetime(df['DATE'], errors='coerce')
+df['Year'] = df['DATE'].apply(lambda x: "%d/" % (x.year))
+df.groupby(['Year', 'CATEGORIE']).size()
+df.groupby(['Year', 'CATEGORIE']).size()
